@@ -1,26 +1,157 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050a13;
+  --background-soft: #0b1424;
+  --foreground: #dce7fb;
+  --muted-foreground: #9db0d1;
+  --card: #0c1628;
+  --card-foreground: #dce7fb;
+  --border: #1f2f47;
+  --primary: #2dd4bf;
+  --primary-foreground: #032820;
+  --secondary: #1f3f66;
+  --secondary-foreground: #dce7fb;
+  --ring: #2dd4bf;
+  --radius: 0.85rem;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-soft: var(--background-soft);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: var(--font-jakarta);
+  --font-mono: var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--border);
 }
 
 body {
-  background: var(--background);
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(160deg, #050a13 0%, #071122 45%, #060e1e 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-jakarta), sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: -25vmax;
+  pointer-events: none;
+  z-index: -2;
+  background:
+    radial-gradient(circle at 12% 18%, rgb(45 212 191 / 0.2), transparent 34%),
+    radial-gradient(circle at 82% 20%, rgb(59 130 246 / 0.2), transparent 34%),
+    radial-gradient(circle at 48% 76%, rgb(16 185 129 / 0.14), transparent 28%),
+    linear-gradient(160deg, #050a13 0%, #071122 45%, #060e1e 100%);
+  filter: blur(20px);
+  animation: pageAurora 22s ease-in-out infinite alternate;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(
+      circle at 50% -15%,
+      rgb(255 255 255 / 0.08),
+      transparent 40%
+    ),
+    linear-gradient(to bottom, transparent 0%, rgb(0 0 0 / 0.28) 100%);
+}
+
+.noise-overlay {
+  position: relative;
+}
+
+.noise-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    rgb(255 255 255 / 0.08) 0.5px,
+    transparent 0.5px
+  );
+  background-size: 4px 4px;
+  mix-blend-mode: soft-light;
+  opacity: 0.35;
+}
+
+.aurora-bg {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 80vh;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      circle at 85% -10%,
+      #2dd4bf33 0%,
+      #2dd4bf22 25%,
+      #2dd4bf11 45%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle at 12% 8%,
+      #3b82f62e 0%,
+      #3b82f620 30%,
+      #3b82f610 50%,
+      transparent 75%
+    ),
+    linear-gradient(160deg, #050a13 0%, #071122 45%, #060e1e 100%);
+  filter: blur(18px);
+  animation: auroraDrift 14s ease-in-out infinite alternate;
+}
+
+.glass {
+  background: rgb(12 22 40 / 0.62);
+  backdrop-filter: blur(14px);
+}
+
+.headline-gradient {
+  background: linear-gradient(100deg, #c8f8ef 5%, #86b8ff 55%, #7fffd4 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@keyframes auroraDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(2%, -3%, 0) scale(1.05);
+  }
+}
+
+@keyframes pageAurora {
+  0% {
+    transform: translate3d(-1.5%, -1.2%, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(1.5%, 1.2%, 0) scale(1.06);
+  }
+}
+
+button {
+  cursor: pointer;
 }
